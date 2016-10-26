@@ -1,3 +1,4 @@
+'use strict'
 import React, { Component } from 'react';
 import{
     AppRegistry,
@@ -11,7 +12,10 @@ import{
     View
 }from 'react-native';
 
-import Util from './view/utils';
+import Util from '../view/utils';
+import Icon from 'react-native-vector-icons/Ionicons';
+import IconFA from 'react-native-vector-icons/FontAwesome';
+import Swiper from 'react-native-swiper'
 
 class MainView extends Component{
     constructor(){
@@ -44,11 +48,11 @@ class MainView extends Component{
         var boxs = this.state.days.map(function(elem, index){
             return(
                 <TouchableHighlight 
-                    key={elem,index} style={[styles.touchBox, index%3==2?styles.touchBox2:styles.touchBox1]} underlayColor="#eee" onPress={() => onThis._jumpToDay(index)}>
+                    key={elem.key} style={[styles.touchBox, index%3==2?styles.touchBox2:styles.touchBox1]} underlayColor="#eee" onPress={() => onThis._jumpToDay(index)}>
                     <View style={styles.boxContainer}>
                         <Text style={styles.boxText}>Day{index+1}</Text>
-                        {elem.isFA? <IconFa size ={elem.size} name={elem.icon} style={[styles.boxIcone,{color:elem.color}]}></IconFa>
-                            <Icon size={elem.size} name={elem.icon} style={[styles.boxIcon,{color:elem.color}]} /></Icon>}
+                        {elem.isFA? <IconFa size ={elem.size} name={elem.icon} style={[styles.boxIcone,{color:elem.color}]}></IconFa>:
+                            <Icon size={elem.size} name={elem.icon} style={[styles.boxIcon,{color:elem.color}]}></Icon>}
                     </View>
                 </TouchableHighlight>
             );
@@ -60,13 +64,13 @@ class MainView extends Component{
                     activeDot={<View style={{backgroundColor: 'rgba(255,255,255,0.8)', width:8, height:8, borderradius: 4, marginLeft: 3, marginRight: 3, marginTop: 3, marginBottom: 3}}/>}>
                     <TouchableHighlight onPress={() => onThis._jumpToDay(0)}>
                         <View style={styles.slide}>
-                            <Image style={styles.image} source={require("./view/img/day1.png")}></Image>
+                            <Image style={styles.image} source={require("../view/img/day1.png")}></Image>
                             <Text style={styles.slideText}>Day1: Timer</Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight onPress={() => onThis._jumpToDay(1)}>
                         <View style={styles.slide}>
-                            <Image style={styles.image} source={require("./view/img/day2.png")}></Image>
+                            <Image style={styles.image} source={require("../view/img/day2.png")}></Image>
                             <Text style={styles.slideText}>Day2 : Weather</Text>
                         </View>
                     </TouchableHighlight>
@@ -97,6 +101,7 @@ class NavigationBar extends Navigator.NavigationBar{
 
 class Tutorial extends Component{
     componentDidMount(){
+        StatusBar.setBarStyle(0);
     }
 
     configureScene(route, routeStack){
@@ -241,5 +246,5 @@ const styles = StyleSheet.create({
     resizeMode: "cover"
   }
 });
-}
-}
+
+AppRegistry.registerComponent('Tutorial', () => Tutorial);
