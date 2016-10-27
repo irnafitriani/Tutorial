@@ -61,7 +61,8 @@ export default class FormView extends Component{
   constructor(props){
     super(props);
     this.state = {
-      formData:{}
+      formData:{},
+      bmiValue:0
     }
   }
   handleFormChange(formData){
@@ -94,6 +95,11 @@ export default class FormView extends Component{
     this.refs.registrationForm.refs.meeting.setDate(new Date());
     this.refs.registrationForm.refs.has_accepted_conditions.setValue(false);
   }
+
+  calculateBMI(){
+    this.state.bmiValue = this.refs.registrationForm.refs.weight.value * this.refs.registrationForm.refs.height.value
+  }
+
   render(){
     return (<ScrollView keyboardShouldPersistTaps={true} style={{ height:200, margin:30,marginLeft:0, marginRight:0}}>
       <Form
@@ -109,53 +115,52 @@ export default class FormView extends Component{
                       <Text>v</Text>
                       ]}
           placeholder='Date'/>
-        <InputField
-        ref='weight'
-        label='Weight'
-        placeholder='Weight' />
-
-        <InputField
-        ref='height'
-        label='Height'
-        placeholder='Height' />
+        <InputField ref='weight' label='Weight' placeholder='Weight'> {this.refs.registrationForm.refs.weigh}</InputField>
+        <InputField ref='height' label='Height' placeholder='Height'>{this.refs.registrationForm.refs.height}</InputField>
         <Separator />
         </Form>
 
-        <TouchableHighlight>
-       <View style={[{
-        backgroundColor:'blue',
-          flex:1, alignItems:'center',
-          borderColor:(this.state.formData.has_accepted_conditions)?'#2398c9':'white',
-          borderWidth:5,
-          width:100,
-          marginLeft:10,
-        },
-      ]}><Text style={{fontSize:11,padding:10,color:'white'}}>Calculate</Text></View>
+        <TouchableHighlight onPress={this.calculateBMI.bind(this)}>
+        <View style={[{
+          backgroundColor:'blue',
+            flex:1, alignItems:'center',
+            borderColor:(this.state.formData.has_accepted_conditions)?'#2398c9':'white',
+            borderWidth:5,
+            width:100,
+            marginLeft:10,
+          },
+      ]}>
+        <Text style={{fontSize:11,padding:10,color:'white'}}>Calculate</Text></View>
         </TouchableHighlight>
 
          <TouchableHighlight>
-       <View style={[{
-        backgroundColor:'grey',
-          flex:1, alignItems:'center',
-          borderColor:(this.state.formData.has_accepted_conditions)?'#2398c9':'white',
-          borderWidth:5,
-          width:200,
-          marginRight:10,
-        },
-      ]}><Text style={{fontSize:11,padding:10,color:'white'}}>Body Mass Index: </Text></View>
+          <View style={[{
+            backgroundColor:'grey',
+              flex:1, alignItems:'center',
+              borderColor:(this.state.formData.has_accepted_conditions)?'#2398c9':'white',
+              borderWidth:5,
+              width:200,
+              marginRight:10,
+            },
+          ]}>
+          <Text style={{fontSize:11,padding:10,color:'white'}}>Body Mass Index:{this.state.bmiValue} </Text></View>
         </TouchableHighlight>
        
       <TouchableHighlight
       disabled={!this.state.formData.has_accepted_conditions}
       onPress={()=>this.refs.registrationForm.refs.other_input.focus()}
       underlayColor='#78ac05'>
-      <View style={[{
-          flex:1, alignItems:'center',
-          borderColor:(this.state.formData.has_accepted_conditions)?'#2398c9':'grey',
-          borderWidth:5
-        },
-      ]}><Text style={{fontSize:19,padding:15,}}>Your Body Mass Index :</Text></View></TouchableHighlight>
-      </ScrollView>);
+        <View style={[{
+            flex:1, alignItems:'center',
+            borderColor:(this.state.formData.has_accepted_conditions)?'#2398c9':'grey',
+            borderWidth:5
+          },
+        ]}>
+          <Text style={{fontSize:19,padding:15,}}>Your Body Mass Index :{this.state.bmiValue}</Text>
+        </View>
+      </TouchableHighlight>
+      </ScrollView>
+      );
     }
   }
 

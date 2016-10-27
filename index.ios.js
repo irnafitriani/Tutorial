@@ -22,12 +22,14 @@ import Swiper from 'react-native-swiper'
 import Day1 from './view/day1';
 import Day2 from './view/day2';
 import Day3 from './view/day3';
+import Day4 from './view/day4';
+import Day5 from './view/day5';
 
 class MainView extends Component{
     constructor(){
         super();
         this.state = {
-            days:[{
+            test:[{
                 key:0,
                 title:"A Stopwatch",
                 component:Day1,
@@ -47,34 +49,52 @@ class MainView extends Component{
                 hideNav: true,
             },{
                 key:2,
-                title:"Calendar",
+                title:"Data Form",
                 component: Day3,
                 isFA: false,
                 icon: "logo-twitter",
                 size:50,
                 color:"#2aa2ef",
                 hideNav: true,
+            },{
+                key:3,
+                title:"Calendar",
+                component: Day4,
+                isFA: false,
+                icon: "logo-twitter",
+                size:50,
+                color:"#2aa2ef",
+                hideNav: true
+            },{
+                key:4,
+                title:"Property Finder",
+                component: Day5,
+                isFA: false,
+                icon: "logo-twitter",
+                size:50,
+                color:"#2aa2ef",
+                hideNav: true
             }]
         }
     }
 
     _jumpToDay(index){
         this.props.navigator.push({
-            title: this.state.days[index].title,
+            title: this.state.test[index].title,
             index: index + 1,
-            display: !this.state.days[index].hidenav,
-            component: this.state.days[index].component,
+            display: !this.state.test[index].hidenav,
+            component: this.state.test[index].component,
         })
     }
 
     render(){
         var onThis = this;
-        var boxs = this.state.days.map(function(elem, index){
+        var boxs = this.state.test.map(function(elem, index){
             return(
                 <TouchableHighlight 
                     key={elem.key} style={[styles.touchBox, index%3==2?styles.touchBox2:styles.touchBox1]} underlayColor="#eee" onPress={() => onThis._jumpToDay(index)}>
                     <View style={styles.boxContainer}>
-                        <Text style={styles.boxText}>Day{index+1}</Text>
+                        <Text style={styles.boxText}>Test{index+1}</Text>
                     </View>
                 </TouchableHighlight>
             );
@@ -88,13 +108,13 @@ class MainView extends Component{
                     <TouchableHighlight onPress={() => onThis._jumpToDay(0)}>
                         <View style={styles.slide}>
                             <Image style={styles.image} source={require("./view/img/day1.png")}></Image>
-                            <Text style={styles.slideText}>Day1: Timer</Text>
+                            <Text style={styles.slideText}>Test1: Timer</Text>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight onPress={() => onThis._jumpToDay(1)}>
                         <View style={styles.slide}>
                             <Image style={styles.image} source={require("./view/img/day2.png")}></Image>
-                            <Text style={styles.slideText}>Day2 : Weather</Text>
+                            <Text style={styles.slideText}>Test2 : Weather</Text>
                         </View>
                     </TouchableHighlight>
                 </Swiper>

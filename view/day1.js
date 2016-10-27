@@ -65,7 +65,7 @@ class WatchControl extends Component{
     }else{
       this.props.clearRecord()
       this.setState({
-        stopBtnText: "计次"
+        stopBtnText: "Stop"
       })
     }
   }
